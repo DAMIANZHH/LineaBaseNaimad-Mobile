@@ -1,22 +1,24 @@
 
+import { decrement, increment } from '@/state/slices/counterSlice';
+import { AppDispatch, RootState } from '@/state/store';
 import React from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '@/state/store';
-import { increment, decrement } from '@/state/slices/counterSlice';
+import { Button, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThemedText } from './themed-text';
+import { ThemedView } from './themed-view';
 
 export function Counter() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Counter Value: {count}</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.text}>Counter Value: {count}</ThemedText>
       <View style={styles.buttonContainer}>
         <Button title="Increment" onPress={() => dispatch(increment())} />
         <Button title="Decrement" onPress={() => dispatch(decrement())} />
       </View>
-    </View>
+    </ThemedView>
   );
 }
 
