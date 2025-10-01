@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { login } from '@/state/slices/authSlice';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Button, StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { ThemedButton } from '../../src/components/ThemedButton';
 
 export default function LoginScreen() {
   const [userName, setUserName] = useState('');
@@ -80,11 +81,14 @@ export default function LoginScreen() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {status === 'loading' ? (
-        <ActivityIndicator size="large" color={Colors[colorScheme].tint} />
-      ) : (
-        <Button title="Login" onPress={handleLogin} color={Colors[colorScheme].tint} />
-      )}
+      <ThemedButton
+        title={status === 'loading' ? '' : 'Login'}
+        onPress={handleLogin}
+        disabled={status === 'loading'}
+        style={status === 'loading' ? { backgroundColor: Colors[colorScheme].tint, opacity: 0.7 } : {}}
+      >
+        {status === 'loading' && <ActivityIndicator size="small" color={Colors[colorScheme].background} />}
+      </ThemedButton>
     </ThemedView>
   );
 }
